@@ -1,0 +1,80 @@
+import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+export async function POST(request: Request) {
+  try {
+    const { email, password } =
+      await request.json();
+
+    const accessToken =
+      process.env.SALESFORCE_ACCESS_TOKEN;
+
+    const sfResponse = await fetch(
+      `https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/query?q=
+      SELECT Id,Name,Email__c,Password__c
+      FROM Customer__c
+      WHERE Email__c='${email}'`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    const data = await sfResponse.json();
+
+    if (!data.records?.length) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
+    }
+
+    const user = data.records[0];
+
+    const validPassword =
+      await bcrypt.compare(
+        password,
+        user.Password__c
+      );
+
+    if (!validPassword) {
+      return NextResponse.json(
+        { error: "Invalid Password" },
+        { status: 401 }
+      );
+    }
+
+    const token = jwt.sign(
+      {
+        id: user.Id,
+        email: user.Email__c,
+      },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: "7d",
+      }
+    );
+
+    return NextResponse.json({
+      success: true,
+      token,
+      user: {
+        id: user.Id,
+        name: user.Name,
+        email: user.Email__c,
+      },
+    });
+
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: String(error),
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
