@@ -111,6 +111,13 @@ export default function Navbar() {
   Cart ({cartCount})
 </a>
 
+      <Link
+  href="/orders"
+  className="hover:text-blue-400"
+>
+  Orders
+</Link>
+
 
           
 

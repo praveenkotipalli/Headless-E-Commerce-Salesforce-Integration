@@ -45,6 +45,8 @@ export async function POST(
         }
       );
 
+      console.log("CART STATUS:", cartResponse.status);
+
     const cartData =
       await cartResponse.json();
 
@@ -91,6 +93,8 @@ console.log(JSON.stringify(cartData, null, 2));
           },
         }
       );
+
+      console.log("ITEM STATUS:", itemResponse.status);
 
     const itemData =
       await itemResponse.json();
@@ -151,6 +155,8 @@ console.log(JSON.stringify(cartData, null, 2));
           }),
         }
       );
+
+      console.log("ORDER STATUS:", orderResponse.status);
 
     const orderData =
       await orderResponse.json();
