@@ -1,6 +1,7 @@
 export async function getProducts() {
   const response = await fetch(
-    "http://localhost:3000/api/products",
+    "https://headless-e-commerce-salesforce-inte-ten.vercel.app/api/products",
+    //"http://localhost:3000/api/products"
     {
       cache: "no-store",
     }
