@@ -1,5 +1,6 @@
 "use client";
 
+import RevenueChart from "@/components/RevenueChart";
 import { useEffect, useState } from "react";
 
 export default function AdminPage() {
@@ -14,7 +15,7 @@ export default function AdminPage() {
 
         const response =
           await fetch(
-            "/api/admin/stats"
+            "/api/admin/dashboard"
           );
 
         const data =
@@ -29,67 +30,121 @@ export default function AdminPage() {
 
   if (!stats) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="
+      min-h-screen
+      bg-black
+      text-white
+      flex
+      items-center
+      justify-center
+      ">
         Loading...
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="
+    min-h-screen
+    bg-black
+    text-white
+    p-10
+    ">
 
-      <div className="max-w-7xl mx-auto px-8 py-12">
+      <h1 className="
+      text-5xl
+      font-bold
+      mb-10
+      ">
+        Admin Dashboard 📊
+      </h1>
 
-        <h1 className="text-5xl font-bold mb-12">
-          Admin Dashboard
-        </h1>
+      <div className="
+      grid
+      md:grid-cols-2
+      lg:grid-cols-3
+      gap-8
+      ">
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <Card
+          title="Products"
+          value={stats.products}
+        />
 
-          <div className="bg-zinc-900 p-8 rounded-3xl">
-            <h2 className="text-gray-400">
-              Customers
-            </h2>
+        <Card
+          title="Customers"
+          value={stats.customers}
+        />
 
-            <p className="text-5xl font-bold mt-4">
-              {stats.customers}
-            </p>
-          </div>
+        <Card
+          title="Orders"
+          value={stats.orders}
+        />
 
-          <div className="bg-zinc-900 p-8 rounded-3xl">
-            <h2 className="text-gray-400">
-              Products
-            </h2>
+        <Card
+          title="Active Carts"
+          value={stats.activeCarts}
+        />
 
-            <p className="text-5xl font-bold mt-4">
-              {stats.products}
-            </p>
-          </div>
+        <Card
+          title="Wishlist Items"
+          value={stats.wishlistItems}
+        />
 
-          <div className="bg-zinc-900 p-8 rounded-3xl">
-            <h2 className="text-gray-400">
-              Orders
-            </h2>
+        <Card
+          title="Revenue"
+          value={`₹${stats.revenue}`}
+        />
 
-            <p className="text-5xl font-bold mt-4">
-              {stats.orders}
-            </p>
-          </div>
-
-          <div className="bg-zinc-900 p-8 rounded-3xl">
-            <h2 className="text-gray-400">
-              Revenue
-            </h2>
-
-            <p className="text-3xl font-bold mt-4 text-green-400">
-              ₹{stats.revenue.toLocaleString()}
-            </p>
-          </div>
-
-        </div>
+        <RevenueChart
+    data={
+      stats.monthlyRevenue
+    }
+  />
 
       </div>
 
     </main>
+  );
+}
+
+function Card({
+  title,
+  value,
+}: {
+  title: string;
+  value: any;
+}) {
+  return (
+    <div className="
+    bg-zinc-900
+    p-8
+    rounded-3xl
+    border
+    border-zinc-800
+    ">
+
+      <h2 className="
+      text-xl
+      text-gray-400
+      ">
+        {title}
+      </h2>
+
+      <p className="
+      text-5xl
+      font-bold
+      mt-4
+      ">
+        {value}
+      </p>
+
+      <div className="mt-10">
+
+  
+
+</div>
+
+    </div>
   );
 }
