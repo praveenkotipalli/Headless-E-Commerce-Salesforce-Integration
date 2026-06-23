@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CartProvider, useCart } from "@/context/CartContext";
+import SearchBar from "./SearchBar";
 
 type User = {
   id: string;
@@ -12,6 +13,8 @@ type User = {
 };
 
 export default function Navbar() {
+
+  
 
   const loadCartCount = async () => {
   const storedUser =
@@ -86,6 +89,9 @@ export default function Navbar() {
 
         {/* Navigation Links */}
         <div className="flex items-center gap-8">
+
+
+          <SearchBar />
 
           <Link
             href="/"

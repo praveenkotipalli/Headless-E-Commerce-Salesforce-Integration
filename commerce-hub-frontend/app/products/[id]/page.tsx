@@ -1,4 +1,5 @@
 import AddToCartButton from "@/components/AddToCartButton";
+import AddToWishlistButton from "@/components/AddToWishlistButton";
 import { getProductById } from "@/lib/salesforce";
 import Link from "next/link";
 
@@ -95,19 +96,9 @@ export default async function ProductDetails({
 
               <AddToCartButton product={product} />
 
-              <button
-                className="
-                border
-                border-zinc-700
-                px-8
-                py-4
-                rounded-xl
-                hover:bg-zinc-900
-                transition
-                "
-              >
-                Add To Wishlist
-              </button>
+              <AddToWishlistButton
+  productId={product.Id}
+/>
 
             </div>
 
