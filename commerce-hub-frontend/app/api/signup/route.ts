@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       await bcrypt.hash(password, 10);
 
     const accessToken =
-      getAccessToken();
+      await getAccessToken();
 
     const response = await fetch(
       "https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/sobjects/Customer__c",

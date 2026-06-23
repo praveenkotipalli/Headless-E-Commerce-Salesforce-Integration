@@ -17,7 +17,7 @@ export default function SignupPage() {
     e.preventDefault();
 
     const response = await fetch(
-      "/api/auth/signup",
+      "/api/signup",
       {
         method: "POST",
         headers: {

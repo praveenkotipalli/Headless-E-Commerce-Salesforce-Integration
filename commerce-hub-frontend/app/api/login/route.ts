@@ -9,7 +9,7 @@ export async function POST(request: Request) {
       await request.json();
 
     const accessToken =
-      getAccessToken();
+      await getAccessToken();
 
     const sfResponse = await fetch(
       `https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/query?q=
