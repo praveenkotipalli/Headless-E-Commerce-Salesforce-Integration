@@ -9,8 +9,20 @@ export async function POST(
 ) {
   try {
 
-    const { customerId } =
-      await request.json();
+    const {
+  customerId,
+
+  shippingName,
+  shippingPhone,
+
+  shippingAddress,
+  shippingCity,
+  shippingState,
+  shippingPincode,
+
+  paymentMethod,
+
+} = await request.json();
 
     const accessToken =
       await getAccessToken();
@@ -141,18 +153,47 @@ console.log(JSON.stringify(cartData, null, 2));
               "application/json",
           },
           body: JSON.stringify({
-            Customer__c:
-              customerId,
 
-            Status__c:
-              "Pending",
+  Customer__c:
+    customerId,
 
-            Total_Amount__c:
-              totalAmount,
+  Status__c:
+    "Pending",
 
-            Order_Date__c:
-              new Date().toISOString(),
-          }),
+  Total_Amount__c:
+    totalAmount,
+
+  Order_Date__c:
+    new Date().toISOString(),
+
+  Shipping_Name__c:
+    shippingName,
+
+  Shipping_Phone__c:
+    shippingPhone,
+
+  Shipping_Address__c:
+    shippingAddress,
+
+  Shipping_City__c:
+    shippingCity,
+
+  Shipping_State__c:
+    shippingState,
+
+  Shipping_Pincode__c:
+    shippingPincode,
+
+  Payment_Method__c:
+    paymentMethod,
+
+  Payment_Status__c:
+    paymentMethod ===
+    "Cash On Delivery"
+      ? "Not Paid"
+      : "Paid",
+
+}),
         }
       );
 
@@ -160,6 +201,19 @@ console.log(JSON.stringify(cartData, null, 2));
 
     const orderData =
       await orderResponse.json();
+
+      console.log(
+  "ORDER RESPONSE"
+);
+
+console.log(
+  JSON.stringify(
+    orderData,
+    null,
+    2
+  )
+);
+
 
     const orderId =
       orderData.id;
@@ -171,34 +225,49 @@ console.log(JSON.stringify(cartData, null, 2));
 
     for (const item of items) {
 
-      await fetch(
-        `${INSTANCE_URL}/services/data/v67.0/sobjects/Order_Item__c`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify({
-            Order__c:
-              orderId,
+  const orderItemResponse =
+    await fetch(
+      `${INSTANCE_URL}/services/data/v67.0/sobjects/Order_Item__c`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
 
-            Product__c:
-              item.Product__c,
+          Order__c:
+            orderId,
 
-            Quantity__c:
-              item.Quantity__c,
+          Product__c:
+            item.Product__c,
 
-            Unit_Price__c:
-              item.Unit_Price__c,
+          Quantity__c:
+            item.Quantity__c,
 
-            Line_Total__c:
-              item.Line_Total__c,
-          }),
-        }
-      );
-    }
+          Unit_Price__c:
+            item.Unit_Price__c,
+
+        }),
+      }
+    );
+
+  const orderItemData =
+    await orderItemResponse.json();
+
+  console.log(
+    "ORDER ITEM RESPONSE"
+  );
+
+  console.log(
+    JSON.stringify(
+      orderItemData,
+      null,
+      2
+    )
+  );
+}
 
     /*
       STEP 6

@@ -17,13 +17,14 @@ export async function GET(
 
     const query = `
   SELECT
-  Id,
-  Name,
-  Order__c,
-  Product__r.Name,
-  Quantity__c,
-  Unit_Price__c
-  FROM Order_Item__c
+Id,
+Name,
+Order__c,
+Product__r.Name,
+Quantity__c,
+Unit_Price__c
+FROM Order_Item__c
+WHERE Order__c='${id}'
 `;
 
     const response = await fetch(

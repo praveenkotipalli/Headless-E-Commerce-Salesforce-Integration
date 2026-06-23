@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CartPage() {
@@ -238,17 +239,17 @@ export default function CartPage() {
 
               </div>
 
-              <button
-                className="
-                mt-8
-                w-full
-                bg-blue-600
-                py-4
-                rounded-xl
-                "
-              >
-                Proceed To Checkout
-              </button>
+              <Link
+  href="/checkout"
+  className="
+  bg-green-600
+  px-8
+  py-4
+  rounded-xl
+  "
+>
+  Proceed To Checkout
+</Link>
 
             </div>
           </>

@@ -161,8 +161,18 @@ export default function Navbar() {
           ) : (
             <>
               <div className="text-blue-400 font-medium">
-                Hi, {user.name}
+                Hi, 
               </div>
+
+              <Link
+  href="/profile"
+  className="
+  hover:text-blue-400
+  transition
+  "
+>
+  {user.name}
+</Link>
 
               <button
                 onClick={handleLogout}
