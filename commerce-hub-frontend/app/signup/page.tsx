@@ -25,6 +25,7 @@ export default function SignupPage() {
             "application/json",
         },
         body: JSON.stringify({
+          name,
           email,
           password,
         }),
@@ -34,17 +35,7 @@ export default function SignupPage() {
     const data = await response.json();
 
     if (data.success) {
-      localStorage.setItem(
-        "token",
-        data.token
-      );
-
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-      );
-
-      router.push("/");
+      router.push("/login");
     } else {
       alert(
         data.error || "Signup Failed"

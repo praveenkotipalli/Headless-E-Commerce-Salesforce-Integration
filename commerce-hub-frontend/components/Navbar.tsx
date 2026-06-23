@@ -41,12 +41,30 @@ export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+  const storedUser =
+    localStorage.getItem("user");
+
+  if (
+    storedUser &&
+    storedUser !== "undefined"
+  ) {
+    try {
+
+      setUser(
+        JSON.parse(storedUser)
+      );
+
+    } catch {
+
+      localStorage.removeItem(
+        "user"
+      );
+
     }
-  }, []);
+  }
+
+}, []);
 
   useEffect(() => {
 
@@ -170,7 +188,7 @@ export default function Navbar() {
   transition
   "
 >
-  {user.name}
+  {user?.name}
 </Link>
 
               <button
