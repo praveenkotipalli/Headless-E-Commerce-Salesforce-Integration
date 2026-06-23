@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { getAccessToken } from "@/lib/salesforce";
 
 export async function POST(request: Request) {
   try {
@@ -16,7 +17,7 @@ export async function POST(request: Request) {
       await bcrypt.hash(password, 10);
 
     const accessToken =
-      process.env.SALESFORCE_ACCESS_TOKEN;
+      getAccessToken();
 
     const response = await fetch(
       "https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/sobjects/Customer__c",

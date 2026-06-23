@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { getAccessToken } from "@/lib/salesforce";
 
 export async function POST(request: Request) {
   try {
@@ -8,7 +9,7 @@ export async function POST(request: Request) {
       await request.json();
 
     const accessToken =
-      process.env.SALESFORCE_ACCESS_TOKEN;
+      getAccessToken();
 
     const sfResponse = await fetch(
       `https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/query?q=
