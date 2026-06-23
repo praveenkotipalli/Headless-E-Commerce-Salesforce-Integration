@@ -170,7 +170,7 @@ export default function Navbar() {
   transition
   "
 >
-  {user.name}
+  {user?.name}
 </Link>
 
               <button
