@@ -1,5 +1,8 @@
 "use client";
 
+
+
+import { useRouter } from "next/navigation";
 import RevenueChart from "@/components/RevenueChart";
 import { useEffect, useState } from "react";
 
@@ -27,6 +30,24 @@ export default function AdminPage() {
     loadStats();
 
   }, []);
+
+  const router = useRouter();
+
+useEffect(() => {
+
+  const user =
+    JSON.parse(
+      localStorage.getItem("user") || "{}"
+    );
+
+  if (
+    !user ||
+    user.role !== "Admin"
+  ) {
+    router.push("/");
+  }
+
+}, []);
 
   if (!stats) {
     return (

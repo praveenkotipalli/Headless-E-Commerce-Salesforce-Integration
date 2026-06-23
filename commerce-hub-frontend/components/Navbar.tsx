@@ -124,15 +124,13 @@ export default function Navbar() {
   Orders
 </Link>
 
-      <Link
-  href="/admin"
-  className="
-  hover:text-blue-400
-  transition
-  "
->
-  Admin
-</Link>
+      {
+  user?.role === "Admin" && (
+    <Link href="/admin">
+      Admin
+    </Link>
+  )
+}
           
 
           {!user ? (

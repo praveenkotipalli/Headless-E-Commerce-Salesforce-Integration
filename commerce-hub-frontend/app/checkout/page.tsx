@@ -127,7 +127,44 @@ export default function CheckoutPage() {
               "Content-Type":
                 "application/json",
             },
-            body: JSON.stringify(payload),
+            body: JSON.stringify({
+
+  customerId: user.id,
+
+  shippingName:
+    useSavedAddress
+      ? profile.Name
+      : form.name,
+
+  shippingPhone:
+    useSavedAddress
+      ? profile.Phone__c
+      : form.phone,
+
+  shippingAddress:
+    useSavedAddress
+      ? profile.Address__c
+      : form.address,
+
+  shippingCity:
+    useSavedAddress
+      ? profile.City__c
+      : form.city,
+
+  shippingState:
+    useSavedAddress
+      ? profile.State__c
+      : form.state,
+
+  shippingPincode:
+    useSavedAddress
+      ? profile.Pincode__c
+      : form.pincode,
+
+  paymentMethod:
+    form.paymentMethod,
+
+}),
           }
         );
 
