@@ -11,22 +11,25 @@ export async function POST(request: Request) {
     const accessToken =
       await getAccessToken();
 
-    const sfResponse = await fetch(
-      `https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/query?q=
-      SELECT
+   const query = `
+SELECT
 Id,
 Name,
 Email__c,
 Password__c,
 Role__c
 FROM Customer__c
-WHERE Email__c='${email}'`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+WHERE Email__c='${email}'
+`;
+
+const sfResponse = await fetch(
+  `https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/query?q=${encodeURIComponent(query)}`,
+  {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
+);
 
     const data = await sfResponse.json();
 
