@@ -13,9 +13,14 @@ export async function POST(request: Request) {
 
     const sfResponse = await fetch(
       `https://orgfarm-c51590213e-dev-ed.develop.my.salesforce.com/services/data/v67.0/query?q=
-      SELECT Id,Name,Email__c,Password__c
-      FROM Customer__c
-      WHERE Email__c='${email}'`,
+      SELECT
+Id,
+Name,
+Email__c,
+Password__c,
+Role__c
+FROM Customer__c
+WHERE Email__c='${email}'`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -62,10 +67,11 @@ export async function POST(request: Request) {
       success: true,
       token,
       user: {
-        id: user.Id,
-        name: user.Name,
-        email: user.Email__c,
-      },
+  id: user.Id,
+  name: user.Name,
+  email: user.Email__c,
+  role: user.Role__c,
+}
     });
 
   } catch (error) {
